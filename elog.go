@@ -7,6 +7,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
@@ -259,7 +260,7 @@ func (el *EasyLogger) getHeader(level int) string {
 		return fmt.Sprintf("%s \r\x1b[37;100m%s\x1b[0;0m [file:%s line:%d]", getLogLevelString(level), getTimeNowStr(), file, line)
 
 	} else {
-		return fmt.Sprintf("%s \r\x1b[37;100m%s\x1b[0;0m ", getLogLevelString(level), getTimeNowStr())
+		return fmt.Sprintf("%s \r\x1b[37;100m%s\x1b[0;0m", getLogLevelString(level), getTimeNowStr())
 	}
 
 }
@@ -280,7 +281,7 @@ func (el *EasyLogger) output(level int, args ...interface{}) {
 	}
 	header := el.getHeader(level)
 	body := fmt.Sprint(args...)
-	fmt.Fprintln(el.writer, header, body)
+	fmt.Fprintln(el.writer, removeAnsiFormat(header), removeAnsiFormat(body))
 	if el.logToStderr {
 		fmt.Fprintln(os.Stderr, header, body)
 	}
@@ -305,7 +306,7 @@ func (el *EasyLogger) outputf(level int, format string, args ...interface{}) {
 
 	header := el.getHeader(level)
 	body := fmt.Sprintf(format, args...)
-	fmt.Fprintln(el.writer, header, body)
+	fmt.Fprintln(el.writer, removeAnsiFormat(header), removeAnsiFormat(body))
 	if el.logToStderr {
 		fmt.Fprintln(os.Stderr, header, body)
 	}
@@ -556,4 +557,10 @@ func fileIsExist(path string) bool {
 		return false
 	}
 	return true
+}
+
+func removeAnsiFormat(text string) string {
+	ansiEscapeRegex := regexp.MustCompile(`\x1b\[[0-9;]*m`)
+
+	return ansiEscapeRegex.ReplaceAllString(text, "")
 }
