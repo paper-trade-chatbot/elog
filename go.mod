@@ -1,3 +1,3 @@
-module github.com/polevpn/elog
+module github.com/paper-trade-chatbot/elog
 
 go 1.14

@@ -202,19 +202,19 @@ func getLogLevelInt(level string) int {
 
 func getLogLevelString(level int) string {
 	if level == LOG_LEVEL_DEBUG {
-		return "\x1b[0;30;42mDEBUG\x1b[m"
+		return "\x1b[0;30;42mDEBUG\x1b[0m"
 	} else if level == LOG_LEVEL_INFO {
-		return "\x1b[0;30;47m INFO\x1b[m"
+		return "\x1b[0;30;47m INFO\x1b[0m"
 	} else if level == LOG_LEVEL_WARN {
-		return "\x1b[0;30;43m WARN\x1b[m"
+		return "\x1b[0;30;43m WARN\x1b[0m"
 	} else if level == LOG_LEVEL_ERROR {
-		return "\x1b[0;30;41mERROR\x1b[m"
+		return "\x1b[0;30;41mERROR\x1b[0m"
 	} else if level == LOG_LEVEL_FATAL {
-		return "\x1b[0;37;41mFATAL\x1b[m"
+		return "\x1b[0;37;41mFATAL\x1b[0m"
 	} else if level == LOG_LEVEL_NONE {
 		return "NONE"
 	}
-	return "INFO"
+	return "\x1b[0;30;47m INFO\x1b[0m"
 }
 
 func getAppName() string {
@@ -240,10 +240,10 @@ func (el *EasyLogger) getHeader(level int) string {
 				file = file[slash+1:]
 			}
 		}
-		return fmt.Sprintf("%s \r\x1b[100m%s\x1b[m [file:%s line:%d]", getLogLevelString(level), getTimeNowStr(), file, line)
+		return fmt.Sprintf("%s \r\x1b[100m%s\x1b[0m [file:%s line:%d]", getLogLevelString(level), getTimeNowStr(), file, line)
 
 	} else {
-		return fmt.Sprintf("%s \r\x1b[100m%s\x1b[m ", getLogLevelString(level), getTimeNowStr())
+		return fmt.Sprintf("%s \r\x1b[100m%s\x1b[0m ", getLogLevelString(level), getTimeNowStr())
 	}
 
 }
