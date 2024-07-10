@@ -256,10 +256,10 @@ func (el *EasyLogger) getHeader(level int) string {
 				file = file[slash+1:]
 			}
 		}
-		return fmt.Sprintf("%s \r\x1b[34;100m%s\x1b[0;0m [file:%s line:%d]", getLogLevelString(level), getTimeNowStr(), file, line)
+		return fmt.Sprintf("%s \r\x1b[37;100m%s\x1b[0;0m [file:%s line:%d]", getLogLevelString(level), getTimeNowStr(), file, line)
 
 	} else {
-		return fmt.Sprintf("%s \r\x1b[34;100m%s\x1b[0;0m ", getLogLevelString(level), getTimeNowStr())
+		return fmt.Sprintf("%s \r\x1b[37;100m%s\x1b[0;0m ", getLogLevelString(level), getTimeNowStr())
 	}
 
 }
