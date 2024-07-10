@@ -33,6 +33,22 @@ const (
 	WITH_NO_FILE_LINE = 1
 )
 
+// Colors
+const (
+	Reset       = "\033[0m"
+	Red         = "\033[31m"
+	Green       = "\033[32m"
+	Yellow      = "\033[33m"
+	Blue        = "\033[34m"
+	Magenta     = "\033[35m"
+	Cyan        = "\033[36m"
+	White       = "\033[37m"
+	BlueBold    = "\033[34;1m"
+	MagentaBold = "\033[35;1m"
+	RedBold     = "\033[31;1m"
+	YellowBold  = "\033[33;1m"
+)
+
 func init() {
 	flag.BoolVar(&logger.logToStderr, "logToStderr", false, "log to stderr,default false")
 	flag.IntVar(&logger.flushTime, "logFlushTime", 3, "log flush time interval,default 3 seconds")
@@ -240,10 +256,10 @@ func (el *EasyLogger) getHeader(level int) string {
 				file = file[slash+1:]
 			}
 		}
-		return fmt.Sprintf("%s \r\x1b[100m%s\x1b[0m [file:%s line:%d]", getLogLevelString(level), getTimeNowStr(), file, line)
+		return fmt.Sprintf("%s \r\x1b[34;100m%s\x1b[0;0m [file:%s line:%d]", getLogLevelString(level), getTimeNowStr(), file, line)
 
 	} else {
-		return fmt.Sprintf("%s \r\x1b[100m%s\x1b[0m ", getLogLevelString(level), getTimeNowStr())
+		return fmt.Sprintf("%s \r\x1b[34;100m%s\x1b[0;0m ", getLogLevelString(level), getTimeNowStr())
 	}
 
 }
